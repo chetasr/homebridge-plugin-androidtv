@@ -56,7 +56,6 @@ class AndroidTV {
     }).catch(e => {
       this.log.error('Failed to launch the admin server:', e.message);
     });
-    console.log(this.config.devices);
     api.on("didFinishLaunching", () => {
       this.log.info("didFinishLaunching");
       this.deviceManager.listen();
@@ -69,7 +68,7 @@ class AndroidTV {
     var tvName = device.name;
     var uuid = this.api.hap.uuid.generate('homebridge:androidtv-' + tvName);
     this.log.info(tvName, 'Registering device', uuid);
-    this.tvAccessory = new this.api.platformAccessory(tvName, uuid);
+    this.tvAccessory = new this.api.platformAccessory(thos.config.devices.find(d => d.uuid === uuid).name || tvName, uuid);
     this.tvAccessory.category = device.type;
     this.infoService = this.tvAccessory.getService(this.api.hap.Service.AccessoryInformation);
     this.infoService.setCharacteristic(this.api.hap.Characteristic.Manufacturer, "Testing").setCharacteristic(this.api.hap.Characteristic.Model, "MODEL").setCharacteristic(this.api.hap.Characteristic.Name, tvName).setCharacteristic(this.api.hap.Characteristic.SerialNumber, uuid).setCharacteristic(this.api.hap.Characteristic.SoftwareRevision, "VERSION").setCharacteristic(this.api.hap.Characteristic.FirmwareRevision, PLUGIN_NAME).setCharacteristic(this.api.hap.Characteristic.HardwareRevision, "PLUGIN_AUTHOR");
