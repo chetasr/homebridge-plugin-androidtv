@@ -79,7 +79,7 @@ class AndroidTV {
             .setCharacteristic(this.api.hap.Characteristic.Manufacturer, this.config.devices.find(d => d.uuid === uuid).manufacturer || "Testing")
             .setCharacteristic(this.api.hap.Characteristic.Model, this.config.devices.find(d => d.uuid === uuid).model || "MODEL")
             .setCharacteristic(this.api.hap.Characteristic.Name, this.config.devices.find(d => d.uuid === uuid).name || tvName)
-            .setCharacteristic(this.api.hap.Characteristic.SerialNumber, uuid)
+            .setCharacteristic(this.api.hap.Characteristic.SerialNumber, this.config.devices.find(d => d.uuid === uuid).serial || uuid)
             .setCharacteristic(this.api.hap.Characteristic.SoftwareRevision, this.config.devices.find(d => d.uuid === uuid).sw || "VERSION")
             .setCharacteristic(this.api.hap.Characteristic.FirmwareRevision, PLUGIN_NAME)
             .setCharacteristic(this.api.hap.Characteristic.HardwareRevision, this.config.devices.find(d => d.uuid === uuid).hw || "PLUGIN_AUTHOR");
