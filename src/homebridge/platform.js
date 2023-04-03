@@ -51,6 +51,8 @@ class AndroidTV {
             .catch(e => {
                 this.log.error('Failed to launch the admin server:', e.message);
             });
+        
+        console.log(this.config.devices);
 
         api.on("didFinishLaunching" , () => {
             this.log.info("didFinishLaunching");
@@ -70,7 +72,7 @@ class AndroidTV {
         const tvName = device.name;
         const uuid = this.api.hap.uuid.generate('homebridge:androidtv-' + tvName);
         this.log.info(tvName, 'Registering device', uuid);
-        this.tvAccessory = new this.api.platformAccessory(this.config.devices.find(d => d.uuid === uuid).name || tvName, uuid);
+        this.tvAccessory = new this.api.platformAccessory(tvName, uuid);
         this.tvAccessory.category = device.type;
 
         this.infoService = this.tvAccessory.getService(this.api.hap.Service.AccessoryInformation);
