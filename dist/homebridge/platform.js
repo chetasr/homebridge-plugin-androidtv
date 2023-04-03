@@ -71,9 +71,9 @@ class AndroidTV {
     this.tvAccessory = new this.api.platformAccessory(this.config.devices.find(d => d.uuid === uuid).name || tvName, uuid);
     this.tvAccessory.category = device.type;
     this.infoService = this.tvAccessory.getService(this.api.hap.Service.AccessoryInformation);
-    this.infoService.setCharacteristic(this.api.hap.Characteristic.Manufacturer, "Testing").setCharacteristic(this.api.hap.Characteristic.Model, "MODEL").setCharacteristic(this.api.hap.Characteristic.Name, tvName).setCharacteristic(this.api.hap.Characteristic.SerialNumber, uuid).setCharacteristic(this.api.hap.Characteristic.SoftwareRevision, "VERSION").setCharacteristic(this.api.hap.Characteristic.FirmwareRevision, PLUGIN_NAME).setCharacteristic(this.api.hap.Characteristic.HardwareRevision, "PLUGIN_AUTHOR");
+    this.infoService.setCharacteristic(this.api.hap.Characteristic.Manufacturer, this.config.devices.find(d => d.uuid === uuid).manufacturer || "Testing").setCharacteristic(this.api.hap.Characteristic.Model, this.config.devices.find(d => d.uuid === uuid).model || "MODEL").setCharacteristic(this.api.hap.Characteristic.Name, this.config.devices.find(d => d.uuid === uuid).name || tvName).setCharacteristic(this.api.hap.Characteristic.SerialNumber, uuid).setCharacteristic(this.api.hap.Characteristic.SoftwareRevision, this.config.devices.find(d => d.uuid === uuid).sw || "VERSION").setCharacteristic(this.api.hap.Characteristic.FirmwareRevision, PLUGIN_NAME).setCharacteristic(this.api.hap.Characteristic.HardwareRevision, this.config.devices.find(d => d.uuid === uuid).hw || "PLUGIN_AUTHOR");
     var tvService = this.tvAccessory.addService(this.api.hap.Service.Television);
-    tvService.setCharacteristic(this.api.hap.Characteristic.ConfiguredName, tvName);
+    tvService.setCharacteristic(this.api.hap.Characteristic.ConfiguredName, this.config.devices.find(d => d.uuid === uuid).name || tvName);
     tvService.setCharacteristic(this.api.hap.Characteristic.SleepDiscoveryMode, this.api.hap.Characteristic.SleepDiscoveryMode.ALWAYS_DISCOVERABLE);
     tvService.setCharacteristic(this.api.hap.Characteristic.PowerModeSelection, this.api.hap.Characteristic.PowerModeSelection.SHOW);
     tvService.getCharacteristic(this.api.hap.Characteristic.Active).onSet((newValue, old) => {
